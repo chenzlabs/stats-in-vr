@@ -17,7 +17,8 @@ AFRAME.registerComponent('stats-in-vr', {
     var statsEl = scene.components['stats'].statsEl;
 
     // hide the DOM stats panel
-    statsEl.style = 'display: none !important';
+    statsEl.style = 'display: none !important;';
+    statsEl.className = 'a-hidden';
 
     // defer most initialization until after camera is injected
     var self = this;
