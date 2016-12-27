@@ -59,7 +59,11 @@
 	AFRAME.registerComponent('stats-in-vr', {
 	  dependencies: ['stats'],
 
-	  schema: {default: true},
+	  schema: {
+	    enabled: {type:'boolean', default: true},
+	    position: {type:'string', default: '0 -0.35 -0.5'},
+	    scale: {type:'string', default: '0.5 0.5 1'}
+	  },
 
 	  init: function () {
 	    var scene = this.el;
@@ -74,9 +78,9 @@
 	      // attached to scene element, so inject stats panel into camera
 	      self.statspanel = document.createElement('a-entity');
 	      self.statspanel.setAttribute('id', 'statspanel');
-	      self.statspanel.setAttribute('position', '0 -0.35 -0.5');
-	      self.statspanel.setAttribute('scale', '0.5 0.5 1');
-	      self.statspanel.setAttribute('visible', self.data ? 'true' : 'false');
+	      self.statspanel.setAttribute('position', self.data.position);
+	      self.statspanel.setAttribute('scale', self.data.scale);
+	      self.statspanel.setAttribute('visible', self.data.enabled ? 'true' : 'false');
 	      self.el.camera.el.appendChild(self.statspanel);
 
 	      // set up the VR stats panel
@@ -127,7 +131,9 @@
 
 	  update: function () {
 	    if (!this.stats) { return; }
-	    return (!this.data) ? this.hide() : this.show();
+	    this.statspanel.setAttribute('position', this.data.position);
+	    this.statspanel.setAttribute('scale', this.data.scale);
+	    return (!this.data.enabled) ? this.hide() : this.show();
 	  },
 
 	  remove: function () {

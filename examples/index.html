@@ -33,6 +33,17 @@
     </script>
     <p>This is a basic example.</p>
 
+    <a href="advanced/">Advanced</a>
+    <script>
+        var href = document.location.href;
+        var as = document.querySelectorAll('a')
+        var a = document.createElement('a');
+        a.setAttribute('href', 'ovrweb:' + as[as.length - 1].href);
+        a.innerText = '(Open with Carmel)';
+        document.body.appendChild(a);
+    </script>
+    <p>This is an advanced example.</p>
+
     <!-- GitHub Corner. -->
     <a href="https://github.com/chenzlabs/stats-in-vr" class="github-corner">
       <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#222; color:#fff; position: absolute; top: 0; border: 0; right: 0;">

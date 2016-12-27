@@ -14,6 +14,9 @@ The stats-in-vr component allows the A-Frame scene stats component to be visible
 
 | Property             | Description                                        | Default Value        |
 |----------------------|----------------------------------------------------|----------------------|
+| enabled              | Whether enabled or not.                            | true                 |
+| position             | Position of camera-locked stats panel.             | '0 -0.35 -0.5'       |
+| scale                | Scale of camera-locked stats panel.                | '0.5 0.5 1'          |
 
 ## Events
 
