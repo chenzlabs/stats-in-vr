@@ -1,48 +1,14 @@
 <html>
   <head>
-    <title>A-Frame stats-in-vr Component</title>
-    <style>
-      html {
-        background: #33425B;
-        color: #FAFAFA;
-        font-family: monospace;
-        font-size: 20px;
-        padding: 10px 20px;
-      }
-      h1 {
-        font-weight: 300;
-      }
-      a {
-        color: #FAFAFA;
-        display: block;
-        padding: 1px 0;
-      }
-    </style>
+    <title>A-Frame stats-in-vr Component - Basic</title>
+    <script src="../build.js"></script>
   </head>
   <body>
-    <h1>A-Frame stats-in-vr Component</h1>
-
-    <a href="basic/">Basic</a>
-    <script>
-        var href = document.location.href;
-        var as = document.querySelectorAll('a')
-        var a = document.createElement('a');
-        a.setAttribute('href', 'ovrweb:' + as[as.length - 1].href);
-        a.innerText = '(Open with Carmel)';
-        document.body.appendChild(a);
-    </script>
-    <p>This is a basic example.</p>
-
-    <a href="advanced/">Advanced</a>
-    <script>
-        var href = document.location.href;
-        var as = document.querySelectorAll('a')
-        var a = document.createElement('a');
-        a.setAttribute('href', 'ovrweb:' + as[as.length - 1].href);
-        a.innerText = '(Open with Carmel)';
-        document.body.appendChild(a);
-    </script>
-    <p>This is an advanced example.</p>
+    <a-scene debug stats-in-vr="position:0 -0.9 -0.5; scale:1 1 1">
+      <a-assets></a-assets>
+      <a-sky color="#3CF"></a-sky>
+      <a-entity geometry="primitive: box" material="color: #C03546"></a-entity>
+    </a-scene>
 
     <!-- GitHub Corner. -->
     <a href="https://github.com/chenzlabs/stats-in-vr" class="github-corner">
@@ -51,6 +17,5 @@
       </svg>
     </a>
     <style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}
-    </style>
   </body>
 </html>
