@@ -29,7 +29,7 @@ suite('stats-in-vr', function () {
     });
 
     test('Stats are created', function () {
-      assert.equal(document.querySelector('.rs-base'), this.sceneEl.components.stats.statsEl);
+      assert.equal(document.querySelector('.rs-container').parentElement.outerHtml, this.sceneEl.components.stats.statsEl.outerHtml);
       assert.ok(this.sceneEl.components.stats.statsEl);
     });
 
