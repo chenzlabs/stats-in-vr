@@ -2,6 +2,7 @@
 
 stats-in-vr component for [A-Frame](https://aframe.io).
 
+![Screenshot](https://chenzlabs.github.io/stats-in-vr/pc-screenshot.png)
 The stats-in-vr component allows the A-Frame scene stats component to be visible in VR.
 
 ## Example
