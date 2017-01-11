@@ -98,7 +98,7 @@
 	    self.rsvalues = [];
 	    var rscanvases = document.querySelectorAll('.rs-canvas');
 	    for (var i = 0; i < rscanvases.length; i++) {
-	      // remember labels and vale elements
+	      // remember labels and value elements
 	      self.rsids.push(rscanvases[i].parentElement.querySelector('.rs-counter-id').innerText);
 	      self.rsvalues.push(rscanvases[i].parentElement.querySelector('.rs-counter-value'));
 
@@ -138,7 +138,7 @@
 	  },
 
 	  update: function () {
-	    if (!this.stats) { return; }
+	    if (!this.statspanel) { return; }
 	    this.statspanel.setAttribute('position', this.data.position);
 	    this.statspanel.setAttribute('scale', this.data.scale);
 	    return (!this.data.enabled) ? this.hide() : this.show();
