@@ -1,6 +1,6 @@
 {
   "name": "aframe-stats-in-vr-component",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "stats-in-vr component for A-Frame.",
   "main": "index.js",
   "scripts": {

@@ -74,15 +74,12 @@
 	    statsEl.style = 'display: none !important;';
 	    statsEl.className = 'a-hidden';
 
-	    // defer most initialization until after camera is injected
-	    this.createStatsPanel = this.createStatsPanel.bind(this);
-	    setTimeout(this.createStatsPanel, 0);
+	    // once we start rendering, create VR stats panel
+	    scene.addEventListener('renderstart', this.createStatsPanel.bind(this));
 	  },
 
 	  createStatsPanel: function () {
 	    var self = this;
-	    var scene = this.el;
-	    var statsEl = scene.components['stats'].statsEl;
 
 	    // attached to scene element, so inject stats panel into camera
 	    self.statspanel = document.createElement('a-entity');
@@ -96,11 +93,22 @@
 	    self.valuecanvases = [];
 	    self.rsids = [];
 	    self.rsvalues = [];
+	  },
+
+	  updateStatsPanel: function () {
+	    var self = this;
+	    if (!self.statspanel || !self.rsids) { return; }
+	    var scene = this.el;
+	    var statsEl = scene.components['stats'].statsEl;
 	    var rscanvases = document.querySelectorAll('.rs-canvas');
 	    for (var i = 0; i < rscanvases.length; i++) {
+	      var rsparent = rscanvases[i].parentElement;
+	      var rsid = rsparent.querySelector('.rs-counter-id').innerText;
+	      if (self.rsids.indexOf(rsid) >= 0) { continue; }
+
 	      // remember labels and value elements
-	      self.rsids.push(rscanvases[i].parentElement.querySelector('.rs-counter-id').innerText);
-	      self.rsvalues.push(rscanvases[i].parentElement.querySelector('.rs-counter-value'));
+	      self.rsids.push(rsid);
+	      self.rsvalues.push(rsparent.querySelector('.rs-counter-value'));
 
 	      // inject id values for rstats canvases
 	      var idsuffix = self.rsids[i].replace(' ', '_');
@@ -156,6 +164,7 @@
 	    var now = Date.now();
 	    if (now < this.lastTime + this.data.updateIntervalMillis) { return; }
 	    this.lastTime = now;
+	    this.updateStatsPanel();
 	    if (this.valuecanvases) {
 	      for (var i = 0; i < this.valuecanvases.length; i++) {
 	        var ctx = this.valuecanvases[i].getContext('2d');
