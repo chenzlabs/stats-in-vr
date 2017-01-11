@@ -75,7 +75,9 @@
 	    statsEl.className = 'a-hidden';
 
 	    // once we start rendering, create VR stats panel
-	    scene.addEventListener('renderstart', this.createStatsPanel.bind(this));
+	    if (scene.renderStarted) { this.createStatsPanel(); } else {
+	      scene.addEventListener('renderstart', this.createStatsPanel.bind(this));
+	    }
 	  },
 
 	  createStatsPanel: function () {
