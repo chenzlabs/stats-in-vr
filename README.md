@@ -2,7 +2,7 @@
 
 stats-in-vr component for [A-Frame](https://aframe.io).
 
-![Screenshot](https://chenzlabs.github.io/stats-in-vr/pc-screenshot.png)
+![Screenshot](https://raw.githubusercontent.com/aframe-community/stats-in-vr/master/examples/pc-screenshot.png)
 The stats-in-vr component allows the A-Frame scene stats component to be visible in VR.
 
 ## Example
@@ -34,7 +34,7 @@ Install and use by directly including the [browser files](dist):
 <head>
   <title>My A-Frame Scene</title>
   <script src="https://aframe.io/releases/0.4.0/aframe.min.js"></script>
-  <script src="https://rawgit.com/chenzlabs/stats-in-vr/master/dist/aframe-stats-in-vr-component.min.js"></script>
+  <script src="https://raw.githubusercontent.com/aframe-community/stats-in-vr/master/dist/aframe-stats-in-vr-component.min.js"></script>
 </head>
 
 <body>
@@ -47,7 +47,7 @@ Install and use by directly including the [browser files](dist):
 Install via npm:
 
 ```bash
-npm install aframe-stats-in-vr-component
+npm install  @aframe-community/aframe-stats-in-vr-component
 ```
 
 Then register and use.
