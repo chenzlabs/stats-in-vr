@@ -1,5 +1,5 @@
 {
-  "name": "aframe-stats-in-vr-component",
+  "name": "@aframe-community/aframe-stats-in-vr-component",
   "version": "0.1.8",
   "description": "stats-in-vr component for A-Frame.",
   "main": "index.js",
