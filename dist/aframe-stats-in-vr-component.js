@@ -42,14 +42,14 @@
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
 
 
-/***/ },
+/***/ }),
 /* 1 */
-/***/ function(module, exports) {
+/***/ (function(module, exports) {
 
 	/* globals AFRAME */
 
@@ -71,8 +71,8 @@
 	    var statsEl = scene.components['stats'].statsEl;
 
 	    // hide the DOM stats panel
-	    statsEl.style = 'display: none !important;';
-	    statsEl.className = 'a-hidden';
+	    //statsEl.style = 'display: none !important;';
+	    //statsEl.className = 'a-hidden';
 
 	    // once we start rendering, create VR stats panel
 	    if (scene.renderStarted) { this.createStatsPanel(); } else {
@@ -117,6 +117,8 @@
 	      rscanvases[i].id = 'rstats-' + idsuffix;
 
 	      var y = (1.25 - i * 0.025) + ' 0';
+
+	      console.log(self.rsids[i],rscanvases[i].id,y,idsuffix);
 
 	      // create the image for the rstats canvas
 	      var stats = document.createElement('a-image');
@@ -174,7 +176,11 @@
 	        ctx.fillStyle = 'gray';
 	        ctx.fillRect(0, 0, 160, 20);
 	        ctx.fillStyle = 'black';
-	        ctx.fillText(this.rsvalues[i].innerText + ' ' + this.rsids[i], 2, 16);
+
+	        const value = this.rsvalues[i].innerText;
+	        const property = this.rsids[i];
+	        const canvasText = (value+" "+property);
+	        ctx.fillText(canvasText, 2, 16);
 	      }
 	    }
 	  },
@@ -190,5 +196,5 @@
 	});
 
 
-/***/ }
+/***/ })
 /******/ ]);
