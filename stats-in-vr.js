@@ -8,12 +8,14 @@ AFRAME.registerComponent("stats-in-vr", {
 
   schema: {
     enabled: { type: "boolean", default: true },
+    debug: { type: "boolean", default: true },
     position: { type: "string", default: "0 -1.1 -1" },
     rotation: { type: "string", default: "-20 0 0" },
     scale: { type: "string", default: "1 .8 1" },
     updateIntervalMs: { type: "number", default: 250 },
     show2dstats: { type: "boolean", default: true },
     anchorEl: { type: "string", default: "[camera]" },
+    showGraphs:  { type: "boolean", default: true },
   },
   
   inVR: false,
@@ -122,11 +124,25 @@ AFRAME.registerComponent("stats-in-vr", {
       this.rscanvases = document.querySelectorAll(".rs-canvas");
     }
     
+    this.monoCanvas = document.createElement('canvas');
+    this.monoCanvas.setAttribute("id", "value-monocanvas");
+    this.monoCanvas.setAttribute("width", 128);
+    this.monoCanvas.setAttribute("height", 16*this.rscanvases.length);
+    this.monoCanvas.setAttribute("crossorigin", "anonymous");
+    this.canvasParent.appendChild(this.monoCanvas)
     
+    this.monoImage = this.monoImage || document.createElement("a-image");
+    this.monoImage.setAttribute("id", "aframe-all");
+    this.monoImage.setAttribute("position", {x:0.17, y:1.25, z:0});
+    this.monoImage.setAttribute("width", .16);
+    this.monoImage.setAttribute("height", .025 * this.rscanvases.length);
+    this.monoImage.setAttribute("src", "#" + this.monoCanvas.id);
+    
+    this.statspanel.appendChild(this.monoImage);
     // for (var i = 0; i < this.rscanvases.length; i++) {
     for (var i = 0; i < this.rscanvases.length; i++) {
     
-      this.yval = (1.25 - i * 0.025);
+      this.yval = (1.3625 - i * 0.025);
       this.rsparent = this.rscanvases[i].parentElement;
       this.rsid = this.rsparent.querySelector(".rs-counter-id").innerText;
 
@@ -143,26 +159,25 @@ AFRAME.registerComponent("stats-in-vr", {
       this.idsuffix = this.rsids[i].replace(" ", "_");
       this.rscanvases[i].id = "rstats-" + this.idsuffix;
       
-      
+      if (this.data.showGraphs) {
       // create the image for the rstats canvas
-      this.stats[i] = document.createElement('a-image');
-      this.stats[i].setAttribute('position', {x:-0.08, y:this.yval, z:0});
-      this.stats[i].setAttribute('width', '0.34');
-      this.stats[i].setAttribute('height', '0.025');
-      this.stats[i].setAttribute('src', '#' + this.rscanvases[i].id);
-      this.statspanel.appendChild(this.stats[i]);      
-
+        this.stats[i] = document.createElement('a-image');
+        this.stats[i].setAttribute('position', {x:-0.08, y:this.yval, z:0});
+        this.stats[i].setAttribute('width', '0.34');
+        this.stats[i].setAttribute('height', '0.025');
+        this.stats[i].setAttribute('src', '#' + this.rscanvases[i].id);
+        this.statspanel.appendChild(this.stats[i]);
+      }
       // create the canvas for the value
       // var valuecanvas = document.createElement("canvas");
       this.valuecanvases[i] = this.valuecanvases[i] || document.createElement("canvas");
       this.valuecanvases[i].setAttribute("id", "value-" + this.idsuffix);
-      this.valuecanvases[i].setAttribute("width", "128");
-      this.valuecanvases[i].setAttribute("height", "16");
+      this.valuecanvases[i].setAttribute("width", 128);
+      this.valuecanvases[i].setAttribute("height", 16);
       this.valuecanvases[i].setAttribute("crossorigin", "anonymous");
 
       // add the value canvas
-      this.canvasParent.appendChild(this.valuecanvases[i])
-      // this.sceneEl.components.stats.statsEl.appendChild(this.canvasParent);
+      // this.canvasParent.appendChild(this.valuecanvases[i])
 
       // create the image for the value canvas
       // var value = document.createElement("a-image");
@@ -172,7 +187,7 @@ AFRAME.registerComponent("stats-in-vr", {
       this.valueimages[i].setAttribute("width", .16);
       this.valueimages[i].setAttribute("height", .025);
       this.valueimages[i].setAttribute("src", "#" + this.valuecanvases[i].id);
-      this.statspanel.appendChild(this.valueimages[i]);
+      // this.statspanel.appendChild(this.valueimages[i]);
     }
   },
 
@@ -191,35 +206,44 @@ AFRAME.registerComponent("stats-in-vr", {
 
     statsEl.parentNode.removeChild(statsEl);
   },
-
+  newText: "",
   tick(){},
   willtick: function(log) {
     // periodically update the value canvases
-    if (!this.inVR) {
+    if (!this.inVR && !this.data.debug) {
       // console.warn("disabled for dev, but add this line back in")
       return;
     }
 
     if (this.valuecanvases) {
       // this.addStatPanels(); // if you had new stats being added dynamically, you could run this...
+      this.newText = "";
+      var ctx = this.monoCanvas.getContext("2d");
+      ctx.clearRect(0, 0, 192, 16 * this.valuecanvases.length);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+      ctx.fillRect(0, 0, 192, 16 * this.valuecanvases.length);
+      
       for (var i = 0; i < this.valuecanvases.length; i++) {
-        var ctx = this.valuecanvases[i].getContext("2d");
-        ctx.clearRect(0, 0, 192, 16);
         ctx.font = "12px monospace";
-        ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
-        ctx.fillRect(0, 0, 192, 16);
         ctx.fillStyle = "black";
-        ctx.fillText(this.rsvalues[i].innerText + " " + this.rsids[i], 2, 13);
+        this.newText = `${this.rsvalues[i].innerText} ${this.rsids[i]}\n`
+        ctx.fillText(this.newText, 2, 13 + (13*i));
       }
+
+
       for (i = 0; i < this.valuecanvases.length*2; i++) {
-        if (this.statspanel.childNodes.item(i).components?.material?.shader){
-          this.statspanel.childNodes.item(i).components.material.material.map.needsUpdate = true;
+        if (this.statspanel.childNodes.item(i)?.components?.material?.shader){
+          let node =this.statspanel.childNodes.item(i);
+          if (node) node.components.material.material.map.needsUpdate = true;
         } 
       }
     }
   },
 
   hide: function() {
+    if (this.data.debug) {
+      return
+    }
     if (this.statspanel) {
       this.statspanel.object3D.visible = false;
     }
