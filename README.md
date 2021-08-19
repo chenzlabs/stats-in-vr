@@ -10,7 +10,7 @@ Which, with just one tiny bug fix, was found to work even on 1.2.0: https://glit
 
 So, adding my fork here. Will pull the updates here soon. It's got all the usual boilerplate, now fallen out of date. I just use the 'stats-in-vr.js' file and ignore the rest for now, may clean up rest of repo later.
 
-You can access it through jsdelivr's cdn here: https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@0.2.0/stats-in-vr.js
+You can access it through jsdelivr's cdn here: https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.0.0/stats-in-vr.js
 
 Note that the build/dist files are NOT up to date with this one file listed above--they wouldn't build because of the ES6 syntax used in my bug fix, and the build tools are just that old.
 
@@ -55,7 +55,7 @@ Install and use by directly including the [browser file](dist):
 <head>
   <title>My A-Frame Scene</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@0.2.0/stats-in-vr.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.0.0/stats-in-vr.js"></script>
 </head>
 
 <body>
