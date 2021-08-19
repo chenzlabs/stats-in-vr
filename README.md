@@ -24,23 +24,33 @@ stats-in-vr component for [A-Frame](https://aframe.io).
 ## Examples
 
 ### default behavior:
-when you enter VR, text stats get attached to your face. When you are not in VR, you see normal 2d stats.
+when you enter VR, full stats get attached to your face, about half a meter down and forward from you. When you are not in VR, you see the normal 2d stats.
 ```html
 <a-scene stats-in-vr></a-scene>
 ```
 
-### attach stats to your left hand when you enter vr:
+### just want fps and tirangles, including their graphs
+```html
+<a-scene stats-in-vr="showlabels:fps,triangles; showgraphs:fps,triangles"></a-scene>
+```
+
+### no graphs, just numbers please
+```html
+<a-scene stats-in-vr="showallgraphs:false"></a-scene>
+```
+
+### only fps graph, but all numbers
+```html
+<a-scene stats-in-vr="showgraphs:fps;showalllabels:true"></a-scene>
+```
+
+### attach translucent stats to your left hand when you enter vr:
 ```html
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.2.0/stats-in-vr.js"></script>
-    <a-scene stats-in-vr="anchorel:#left-hand; position:0 -.5 0;showallgraphs:true;">
-      <a-entity id="rig"
-                movement-controls="fly:true;"
-                position="0 0 0">
-        <a-entity camera
-                  id="the-cam"
-                  position="0 1.6 0"
-                  look-controls="pointerLockEnabled: false">
+    <a-scene stats-in-vr="anchorel:#left-hand; position:0 -.5 0;showallgraphs:true;fillstyle:rgba(255, 255, 255, 0.5);">
+      <a-entity id="rig" movement-controls="fly:true;" position="0 0 0">
+        <a-entity camera position="0 1.6 0" look-controls>
         </a-entity>
         <a-entity id="left-hand" hand-controls="hand: left"></a-entity>
         <a-entity hand-controls="hand: right"></a-entity>
@@ -52,17 +62,8 @@ when you enter VR, text stats get attached to your face. When you are not in VR,
 stick a VR panel somewhere you want in the scene, and make it stay there, whether you're in VR or not.
 ```html
 <a-scene stats-in-vr="anchorel:#the-box;position:0 .4 0;showallgraphs:true; alwaysshow3dstats:true; show2dstats:false;" >
-     <a-circle 
-         id="floor" 
-         material="roughness:.633" 
-         shadow="receive:true; cast:false" 
-         position="0 0 0"
-         rotation="-90 0 0" 
-         radius="400"
-                side="double"
-         color="#7BC8A4">
-     </a-circle>
-     <a-box id="the-box" shadow position="-1 0.5 -6" rotation="0 45 0" color="white"></a-box>
+     <a-circle id="floor" rotation="-90 0 0" radius="400" color="#7BC8A4"></a-circle>
+     <a-box id="the-box" position="-1 0.5 -6" rotation="0 45 0" color="red"></a-box>
 </a-scene>
 ```
 
@@ -71,16 +72,18 @@ https://glitch.com/edit/#!/stats-in-vr?path=index.html%3A17%3A30
 
 ## params
 ```js
+
   schema: {
     enabled: { type: "boolean", default: true },
     debug: { type: "boolean", default: false },
     position: { type: "string", default: "0 -1.1 -1" },
     rotation: { type: "string", default: "-20 0 0" },
     scale: { type: "string", default: "1 .8 1" },
-    throttle: { type: "number", default: 20 }, // throttle
+    throttle: { type: "number", default: 20 },
+    fillstyle: { type:"color", default: "white"}, // for opacity, you can try "rgba(255, 255, 255, 0.5)"
     show2dstats: { type: "boolean", default: true },  // show the built-in 'stats' component
     alwaysshow3dstats: { type: "boolean", default: false },  // show the built-in 'stats' component
-    anchorel: { type: "string", default: "[camera]" }, // anchor in-vr stats to something other than the camera
+    anchorel: { type: "selector", default: "[camera]" }, // anchor in-vr stats to something other than the camera
     showalllabel: { type: "boolean", default: true }, 
     showlabels: {type: 'array', default:[]}, // e.g., ['raf','fps','calls','entities']
     showallgraphs: { type: "boolean", default: true },
