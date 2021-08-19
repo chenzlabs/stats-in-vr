@@ -8,7 +8,12 @@ https://github.com/chenzlabs/stats-in-vr/pull/1
 Which, with just one tiny bug fix, was found to work even on 1.2.0: https://glitch.com/edit/#!/stats-in-vr?path=index.html%3A36%3A53
 though it seems the bars may not be working properly and that they perhaps used to. perhaps some more tinkering is in order?
 
-So, adding my fork here. Will pull the updates here soon. It's got all the usual boilerplate, now fallen out of date no doubt. I just use the 'main.js' file.
+So, adding my fork here. Will pull the updates here soon. It's got all the usual boilerplate, now fallen out of date no doubt. I just use the 'stats-in-vr.js' file and ignore the rest for now, may clean it up later.
+
+You can access it through jsdelivr's cdn here: https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@0.2.0/stats-in-vr.js
+
+Note that the build/dist files are NOT up to date with this one file listed above--they wouldn't build because of the ES6 syntax used in my bug fix, and the build tools are just that old.
+
 
 ## aframe-stats-in-vr-component
 
@@ -50,8 +55,9 @@ Install and use by directly including the [browser files](dist):
 ```html
 <head>
   <title>My A-Frame Scene</title>
-  <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
-  <script src="https://raw.githubusercontent.com/aframe-community/stats-in-vr/master/dist/aframe-stats-in-vr-component.min.js"></script>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@0.2.0/stats-in-vr.js"></script>
+<!--   <script src="https://raw.githubusercontent.com/aframe-community/stats-in-vr/master/dist/aframe-stats-in-vr-component.min.js"></script> -->
 </head>
 
 <body>
