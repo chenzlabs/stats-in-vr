@@ -7,6 +7,7 @@
 - pick background color, opacity
 - include some, all, or no charts
 - attach to camera by default, but attach anywhere you want
+- default behavior is to display when enter-vr, and hide and show `stats` when exit-vr, but behavior can be customized
 - easy-peasy
 
 ## yet another necro component pulled into service
