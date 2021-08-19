@@ -17,7 +17,7 @@ AFRAME.registerComponent("stats-in-vr", {
     show2dstats: { type: "boolean", default: true },  // show the built-in 'stats' component
     alwaysshow3dstats: { type: "boolean", default: false },  // show the built-in 'stats' component
     anchorel: { type: "selector", default: "[camera]" }, // anchor in-vr stats to something other than the camera
-    showalllabel: { type: "boolean", default: true }, 
+    showalllabels: { type: "boolean", default: true }, 
     showlabels: {type: 'array', default:[]}, // e.g., ['raf','fps','calls','entities']
     showallgraphs: { type: "boolean", default: true },
     showgraphs: {type: 'array', default:[]}, // e.g., ['raf','fps','calls','entities']
