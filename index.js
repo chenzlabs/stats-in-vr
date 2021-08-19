@@ -1,1 +1,0 @@
-require('./stats-in-vr');
