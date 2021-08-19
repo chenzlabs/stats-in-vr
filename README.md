@@ -1,3 +1,15 @@
+## yet another necro component pulled into service
+
+This guy is from back in the olden days! 0.4.0 is close to as old as I've seen. Very cool that this 5 year old code can still be called into service.
+
+I was thinking about using web2vr and doing the proper stats panel, but that would definitely add more impact to the site being measured itself than this option. There's also probably other nice ways to implement this idea these days. but I googled, found this, and then found this pull request on it:
+https://github.com/chenzlabs/stats-in-vr/pull/1
+
+Which, with just one tiny bug fix, was found to work even on 1.2.0: https://glitch.com/edit/#!/stats-in-vr?path=index.html%3A36%3A53
+though it seems the bars may not be working properly and that they perhaps used to. perhaps some more tinkering is in order?
+
+So, adding my fork here. Will pull the updates here soon. It's got all the usual boilerplate, now fallen out of date no doubt. I just use the 'main.js' file.
+
 ## aframe-stats-in-vr-component
 
 ![npm (scoped)](https://img.shields.io/npm/v/@aframe-community/aframe-stats-in-vr-component)
