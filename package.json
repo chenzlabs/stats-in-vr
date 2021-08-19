@@ -1,6 +1,6 @@
 {
-  "name": "aframe-stats-in-vr-component",
-  "version": "0.1.7",
+  "name": "@aframe-community/aframe-stats-in-vr-component",
+  "version": "0.1.8",
   "description": "stats-in-vr component for A-Frame.",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chenzlabs/stats-in-vr.git"
+    "url": "git+https://github.com/aframe-community/stats-in-vr.git"
   },
   "keywords": [
     "aframe",
@@ -29,16 +29,17 @@
     "aframe-vr",
     "vr",
     "mozvr",
-    "webvr"
+    "webvr",
+    "stats"
   ],
-  "author": "Michael Chen <machenmusik@gmail.com>",
+  "author": "aframe-community https://github.com/aframe-community",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chenzlabs/stats-in-vr/issues"
+    "url": "https://github.com/aframe-community/stats-in-vr/issues"
   },
-  "homepage": "https://github.com/chenzlabs/stats-in-vr#readme",
+  "homepage": "https://github.com/aframe-community/stats-in-vr#readme",
   "devDependencies": {
-    "aframe": "^0.4.0",
+    "aframe": "^1.0.4",
     "browserify": "^13.0.0",
     "browserify-css": "^0.9.1",
     "budo": "^8.2.2",
