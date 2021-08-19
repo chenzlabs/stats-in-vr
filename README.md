@@ -1,9 +1,9 @@
 # features
 - get stats component data in VR, while you're actually using your app
 - high performance, just one canvas texture for all stats (each though each graph is its own canvas)
-- uses existing stats component
+- uses existing stats component under the hood
 - pick which stats you want to track
-- throttle
+- throttle to as smooth or as performance sensitive as you want
 - pick background color, opacity
 - include some, all, or no charts
 - attach to camera by default, but attach anywhere you want
