@@ -12,10 +12,11 @@ AFRAME.registerComponent("stats-in-vr", {
     position: { type: "string", default: "0 -1.1 -1" },
     rotation: { type: "string", default: "-20 0 0" },
     scale: { type: "string", default: "1 .8 1" },
-    throttle: { type: "number", default: 20 }, // throttle
+    throttle: { type: "number", default: 20 },
+    backgroundcolor: { type:"color", default: "white"}, // for opacity, you can try "rgba(255, 255, 255, 0.5)"
     show2dstats: { type: "boolean", default: true },  // show the built-in 'stats' component
     alwaysshow3dstats: { type: "boolean", default: false },  // show the built-in 'stats' component
-    anchorel: { type: "string", default: "[camera]" }, // anchor in-vr stats to something other than the camera
+    anchorel: { type: "selector", default: "[camera]" }, // anchor in-vr stats to something other than the camera
     showalllabel: { type: "boolean", default: true }, 
     showlabels: {type: 'array', default:[]}, // e.g., ['raf','fps','calls','entities']
     showallgraphs: { type: "boolean", default: true },
@@ -70,7 +71,7 @@ AFRAME.registerComponent("stats-in-vr", {
       "visible",
       this.data.enabled ? "true" : "false"
     );
-    document.querySelector(this.data.anchorel).appendChild(this.statspanel);
+    this.data.anchorel.appendChild(this.statspanel);
     
     await this.addEls();
     if (this.data.alwaysshow3dstats || this.inVR) {
@@ -219,7 +220,7 @@ AFRAME.registerComponent("stats-in-vr", {
       this.newText = "";
       var ctx = this.monoCanvas.getContext("2d");
       ctx.clearRect(0, 0, 192, 16 * this.valuecanvases.length);
-      ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+      ctx.fillStyle = this.data.backgroundcolor;
       ctx.fillRect(0, 0, 192, 16 * this.valuecanvases.length);
       
       for (var i = 0; i < this.valuecanvases.length; i++) {
@@ -229,7 +230,6 @@ AFRAME.registerComponent("stats-in-vr", {
         this.newText = `${this.rsvalues[i].innerText} ${this.rsids[i]}\n`
         ctx.fillText(this.newText, 2, 15.5 + (15.5*i));
       }
-
 
       for (i = 0; i < this.valuecanvases.length*2; i++) {
         if (this.statspanel.childNodes.item(i)?.components?.material?.shader){
