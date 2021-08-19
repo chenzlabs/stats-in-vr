@@ -39,11 +39,11 @@ https://glitch.com/edit/#!/stats-in-vr?path=index.html%3A17%3A30
     rotation: { type: "string", default: "-20 0 0" },
     scale: { type: "string", default: "1 .8 1" },
     updateIntervalMs: { type: "number", default: 20 }, // throttle
-    show2dstats: { type: "boolean", default: true },  // show the built-in 'stats' component
+    show2dstats: { type: "boolean", default: true },  // show the built-in 'stats' component when not in VR
     anchorEl: { type: "string", default: "[camera]" }, // anchor in-vr stats to something other than the camera
-    showAllLabels: { type: "boolean", default: true }, 
+    showAllLabels: { type: "boolean", default: true }, // show all stats available from stats component
     showLabels: {type: 'array', default:['raf','fps','calls','entities']}, // e.g., ['raf','fps','calls','entities']
-    showAllGraphs: { type: "boolean", default: true },
+    showAllGraphs: { type: "boolean", default: true }, // show all graphs available from stats component
     showGraphs: {type: 'array', default:['raf','fps','calls','entities']}, // e.g., ['raf','fps','calls','entities']
   },
 ```
