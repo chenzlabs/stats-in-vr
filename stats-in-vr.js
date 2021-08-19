@@ -8,22 +8,21 @@ AFRAME.registerComponent("stats-in-vr", {
 
   schema: {
     enabled: { type: "boolean", default: true },
-    debug: { type: "boolean", default: true },
+    debug: { type: "boolean", default: false },
     position: { type: "string", default: "0 -1.1 -1" },
     rotation: { type: "string", default: "-20 0 0" },
     scale: { type: "string", default: "1 .8 1" },
-    updateIntervalMs: { type: "number", default: 250 },
-    show2dstats: { type: "boolean", default: true },
-    anchorEl: { type: "string", default: "[camera]" },
-    showGraphs:  { type: "boolean", default: true },
+    updateIntervalMs: { type: "number", default: 20 }, // throttle
+    show2dstats: { type: "boolean", default: true },  // show the built-in 'stats' component
+    anchorEl: { type: "string", default: "[camera]" }, // anchor in-vr stats to something other than the camera
+    showAllLabels: { type: "boolean", default: false }, 
+    showLabels: {type: 'array', default:['raf','fps','calls','entities']}, // e.g., ['raf','fps','calls','entities']
+    showAllGraphs: { type: "boolean", default: false },
+    showGraphs: {type: 'array', default:['raf','fps','calls','entities']}, // e.g., ['raf','fps','calls','entities']
   },
   
   inVR: false,
   init: function() {
-    
-    // var scene = this.sceneEl;
-    // var statsEl = this.sceneEl.components.stats.statsEl;
-    // this.tick = AFRAME.utils.throttleTick(this.tick, this.data.updateIntervalMs, this);
     this.canvasParent = document.createElement('div');
     this.canvasParent.setAttribute('id','stats-in-vr-canvas-parent')
     this.sceneEl = AFRAME.scenes[0]
@@ -33,12 +32,10 @@ AFRAME.registerComponent("stats-in-vr", {
       if (this.data.enabled) {
         this.show()
       }
-      // AFRAME.scenes[0].setAttribute('stats-in-vr',{a:1})
     })
     AFRAME.scenes[0].addEventListener('exit-vr', async () => {
       this.inVR = false;
       this.hide();
-      // AFRAME.scenes[0].setAttribute('stats-in-vr',{a:1})
     })
     
     if (!this.data.show2dstats) {
@@ -70,15 +67,17 @@ AFRAME.registerComponent("stats-in-vr", {
       "visible",
       this.data.enabled ? "true" : "false"
     );
-    // this.sceneEl.camera.el.appendChild(this.statspanel);
     document.querySelector(this.data.anchorEl).appendChild(this.statspanel);
     
     await this.addEls();
     if (!this.inVR) {
-      // console.warn("disabled for dev, but add this line back in")
       this.hide();
     }
-    this.sceneEl.components.stats.statsEl.appendChild(this.canvasParent);
+    if (this.data.debug) {
+      this.sceneEl.components.stats.statsEl.appendChild(this.canvasParent);
+    } else {
+      document.body.appendChild(this.canvasParent)
+    }
     this.addStatPanels();
     this.tick = AFRAME.utils.throttleTick(this.willtick, this.data.updateIntervalMs, this);
   },
@@ -91,7 +90,7 @@ AFRAME.registerComponent("stats-in-vr", {
   
   addEls: async function() {
     if (!document.querySelectorAll(".rs-canvas").length) {
-      // console.log("no canvases, recurse in ", this.data.updateIntervalMs)
+      if (this.data.debug) console.log("no canvases, recurse in ", this.data.updateIntervalMs)
       await this.waitForTime(this.data.updateIntervalMs)
       await this.addEls()
     }
@@ -101,8 +100,6 @@ AFRAME.registerComponent("stats-in-vr", {
     this.rsids = [];
     this.rsvalues = [];
     this.stats = [];
-    // console.log(document.querySelectorAll(".rs-canvas").length)
-    // this.addStatPanels();
   },
   
   addStatPanels: function() {
@@ -137,11 +134,10 @@ AFRAME.registerComponent("stats-in-vr", {
     this.monoImage.setAttribute("width", .16);
     this.monoImage.setAttribute("height", .025 * this.rscanvases.length);
     this.monoImage.setAttribute("src", "#" + this.monoCanvas.id);
-    
     this.statspanel.appendChild(this.monoImage);
-    // for (var i = 0; i < this.rscanvases.length; i++) {
-    for (var i = 0; i < this.rscanvases.length; i++) {
     
+    for (var i = 0; i < this.rscanvases.length; i++) {
+      console.log(this.rsid)
       this.yval = (1.3625 - i * 0.025);
       this.rsparent = this.rscanvases[i].parentElement;
       this.rsid = this.rsparent.querySelector(".rs-counter-id").innerText;
@@ -151,7 +147,6 @@ AFRAME.registerComponent("stats-in-vr", {
       }
 
       // remember labels and value elements
-      // this.rsids.push(this.rsid);
       this.rsids[i] = this.rsid;
       this.rsvalues[i] = (this.rsparent.querySelector(".rs-counter-value"));
 
@@ -159,7 +154,7 @@ AFRAME.registerComponent("stats-in-vr", {
       this.idsuffix = this.rsids[i].replace(" ", "_");
       this.rscanvases[i].id = "rstats-" + this.idsuffix;
       
-      if (this.data.showGraphs) {
+      if (this.data.showAllGraphs || this.data.showGraphs.includes(this.rsid.toLowerCase())) {
       // create the image for the rstats canvas
         this.stats[i] = document.createElement('a-image');
         this.stats[i].setAttribute('position', {x:-0.08, y:this.yval, z:0});
@@ -168,26 +163,27 @@ AFRAME.registerComponent("stats-in-vr", {
         this.stats[i].setAttribute('src', '#' + this.rscanvases[i].id);
         this.statspanel.appendChild(this.stats[i]);
       }
-      // create the canvas for the value
-      // var valuecanvas = document.createElement("canvas");
-      this.valuecanvases[i] = this.valuecanvases[i] || document.createElement("canvas");
-      this.valuecanvases[i].setAttribute("id", "value-" + this.idsuffix);
-      this.valuecanvases[i].setAttribute("width", 128);
-      this.valuecanvases[i].setAttribute("height", 16);
-      this.valuecanvases[i].setAttribute("crossorigin", "anonymous");
+      
+      if (this.data.showAllLabels || this.data.showLabels.includes(this.rsid.toLowerCase())) {
+        console.log(this.data.showLabels,this.rsid.toLowerCase())
+        // create the canvas for the value
+        this.valuecanvases[i] = this.valuecanvases[i] || document.createElement("canvas");
+        this.valuecanvases[i].setAttribute("id", "value-" + this.idsuffix);
+        this.valuecanvases[i].setAttribute("width", 128);
+        this.valuecanvases[i].setAttribute("height", 16);
+        this.valuecanvases[i].setAttribute("crossorigin", "anonymous");
 
-      // add the value canvas
-      // this.canvasParent.appendChild(this.valuecanvases[i])
+        // add the value canvas
+        // this.canvasParent.appendChild(this.valuecanvases[i])
 
-      // create the image for the value canvas
-      // var value = document.createElement("a-image");
-      this.valueimages[i] = this.valueimages[i] || document.createElement("a-image");
-      this.valueimages[i].setAttribute("id", "aframe-" + this.idsuffix);
-      this.valueimages[i].setAttribute("position", {x:0.17, y:this.yval, z:0});
-      this.valueimages[i].setAttribute("width", .16);
-      this.valueimages[i].setAttribute("height", .025);
-      this.valueimages[i].setAttribute("src", "#" + this.valuecanvases[i].id);
-      // this.statspanel.appendChild(this.valueimages[i]);
+        // create the image for the value canvas
+        this.valueimages[i] = this.valueimages[i] || document.createElement("a-image");
+        this.valueimages[i].setAttribute("id", "aframe-" + this.idsuffix);
+        this.valueimages[i].setAttribute("position", {x:0.17, y:this.yval, z:0});
+        this.valueimages[i].setAttribute("width", .16);
+        this.valueimages[i].setAttribute("height", .025);
+        this.valueimages[i].setAttribute("src", "#" + this.valuecanvases[i].id);
+      }
     }
   },
 
@@ -209,14 +205,11 @@ AFRAME.registerComponent("stats-in-vr", {
   newText: "",
   tick(){},
   willtick: function(log) {
-    // periodically update the value canvases
     if (!this.inVR && !this.data.debug) {
-      // console.warn("disabled for dev, but add this line back in")
       return;
     }
 
     if (this.valuecanvases) {
-      // this.addStatPanels(); // if you had new stats being added dynamically, you could run this...
       this.newText = "";
       var ctx = this.monoCanvas.getContext("2d");
       ctx.clearRect(0, 0, 192, 16 * this.valuecanvases.length);
@@ -224,10 +217,11 @@ AFRAME.registerComponent("stats-in-vr", {
       ctx.fillRect(0, 0, 192, 16 * this.valuecanvases.length);
       
       for (var i = 0; i < this.valuecanvases.length; i++) {
+        if (!this.valuecanvases[i]) continue
         ctx.font = "12px monospace";
         ctx.fillStyle = "black";
         this.newText = `${this.rsvalues[i].innerText} ${this.rsids[i]}\n`
-        ctx.fillText(this.newText, 2, 13 + (13*i));
+        ctx.fillText(this.newText, 2, 15.5 + (15.5*i));
       }
 
 
