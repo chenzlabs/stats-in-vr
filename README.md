@@ -24,15 +24,17 @@ The stats-in-vr component allows the A-Frame scene stats component to be visible
 
 ## Example
 
+### default
+when you enter VR, text stats get attached to your face. When you are not in VR, you see normal 2d stats.
 ```html
 <a-scene stats-in-vr></a-scene>
 ```
 
-### attach stats to your left hand
+### attach stats to your left hand when you enter vr
 ```html
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.1.0/stats-in-vr.js"></script>
-    <a-scene stats-in-vr="anchorEl:#left-hand;position:0 -.5 0;showAllGraphs:true; debug:true;" renderer="physicallyCorrectLights: true">
+    <a-scene stats-in-vr="anchorel:#left-hand; position:0 -.5 0;showallgraphs:true;">
       <a-entity id="rig"
                 movement-controls="fly:true;"
                 position="0 0 0">
@@ -47,6 +49,24 @@ The stats-in-vr component allows the A-Frame scene stats component to be visible
     </a-scene>
 ```
 
+### make it a permanent fixture in your scene, vr or not
+stick a VR panel somewhere you want in the scene, and make it stay there.
+```html
+<a-scene stats-in-vr="anchorel:#the-box;position:0 .4 0;showallgraphs:true; alwaysshow3dstats:true; show2dstats:false;" >
+     <a-circle 
+         id="floor" 
+         material="roughness:.633" 
+         shadow="receive:true; cast:false" 
+         position="0 0 0"
+         rotation="-90 0 0" 
+         radius="400"
+                side="double"
+         color="#7BC8A4">
+     </a-circle>
+     <a-box id="the-box" shadow position="-1 0.5 -6" rotation="0 45 0" color="white"></a-box>
+</a-scene>
+```
+
 ## Glitch
 https://glitch.com/edit/#!/stats-in-vr?path=index.html%3A17%3A30
 
@@ -58,13 +78,14 @@ https://glitch.com/edit/#!/stats-in-vr?path=index.html%3A17%3A30
     position: { type: "string", default: "0 -1.1 -1" },
     rotation: { type: "string", default: "-20 0 0" },
     scale: { type: "string", default: "1 .8 1" },
-    updateIntervalMs: { type: "number", default: 20 }, // throttle
-    show2dstats: { type: "boolean", default: true },  // show the built-in 'stats' component when not in VR
-    anchorEl: { type: "string", default: "[camera]" }, // anchor in-vr stats to something other than the camera
-    showAllLabels: { type: "boolean", default: true }, // show all stats available from stats component
-    showLabels: {type: 'array', default:['raf','fps','calls','entities']}, // e.g., ['raf','fps','calls','entities']
-    showAllGraphs: { type: "boolean", default: true }, // show all graphs available from stats component
-    showGraphs: {type: 'array', default:['raf','fps','calls','entities']}, // e.g., ['raf','fps','calls','entities']
+    throttle: { type: "number", default: 20 }, // throttle
+    show2dstats: { type: "boolean", default: true },  // show the built-in 'stats' component
+    alwaysshow3dstats: { type: "boolean", default: false },  // show the built-in 'stats' component
+    anchorel: { type: "string", default: "[camera]" }, // anchor in-vr stats to something other than the camera
+    showalllabel: { type: "boolean", default: true }, 
+    showlabels: {type: 'array', default:[]}, // e.g., ['raf','fps','calls','entities']
+    showallgraphs: { type: "boolean", default: true },
+    showgraphs: {type: 'array', default:[]}, // e.g., ['raf','fps','calls','entities']
   },
 ```
 
