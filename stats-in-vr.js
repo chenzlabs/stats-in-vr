@@ -12,13 +12,14 @@ AFRAME.registerComponent("stats-in-vr", {
     position: { type: "string", default: "0 -1.1 -1" },
     rotation: { type: "string", default: "-20 0 0" },
     scale: { type: "string", default: "1 .8 1" },
-    updateIntervalMs: { type: "number", default: 20 }, // throttle
+    throttle: { type: "number", default: 20 }, // throttle
     show2dstats: { type: "boolean", default: true },  // show the built-in 'stats' component
-    anchorEl: { type: "string", default: "[camera]" }, // anchor in-vr stats to something other than the camera
-    showAllLabels: { type: "boolean", default: true }, 
-    showLabels: {type: 'array', default:['raf','fps','calls','entities']}, // e.g., ['raf','fps','calls','entities']
-    showAllGraphs: { type: "boolean", default: true },
-    showGraphs: {type: 'array', default:['raf','fps','calls','entities']}, // e.g., ['raf','fps','calls','entities']
+    alwaysshow3dstats: { type: "boolean", default: false },  // show the built-in 'stats' component
+    anchorel: { type: "string", default: "[camera]" }, // anchor in-vr stats to something other than the camera
+    showalllabel: { type: "boolean", default: true }, 
+    showlabels: {type: 'array', default:[]}, // e.g., ['raf','fps','calls','entities']
+    showallgraphs: { type: "boolean", default: true },
+    showgraphs: {type: 'array', default:[]}, // e.g., ['raf','fps','calls','entities']
   },
   
   inVR: false,
@@ -35,7 +36,9 @@ AFRAME.registerComponent("stats-in-vr", {
     })
     AFRAME.scenes[0].addEventListener('exit-vr', async () => {
       this.inVR = false;
-      this.hide();
+      if (!this.data.alwaysshow3dstats) {
+        this.hide();
+      }
     })
     
     if (!this.data.show2dstats) {
@@ -67,10 +70,13 @@ AFRAME.registerComponent("stats-in-vr", {
       "visible",
       this.data.enabled ? "true" : "false"
     );
-    document.querySelector(this.data.anchorEl).appendChild(this.statspanel);
+    document.querySelector(this.data.anchorel).appendChild(this.statspanel);
     
     await this.addEls();
-    if (!this.inVR) {
+    if (this.data.alwaysshow3dstats || this.inVR) {
+      this.show();
+    }
+    else if (!this.inVR) {
       this.hide();
     }
     if (this.data.debug) {
@@ -79,7 +85,7 @@ AFRAME.registerComponent("stats-in-vr", {
       document.body.appendChild(this.canvasParent)
     }
     this.addStatPanels();
-    this.tick = AFRAME.utils.throttleTick(this.willtick, this.data.updateIntervalMs, this);
+    this.tick = AFRAME.utils.throttleTick(this.willtick, this.data.throttle, this);
   },
   
   waitForTime: async function(ms) {
@@ -90,8 +96,8 @@ AFRAME.registerComponent("stats-in-vr", {
   
   addEls: async function() {
     if (!document.querySelectorAll(".rs-canvas").length) {
-      if (this.data.debug) console.log("no canvases, recurse in ", this.data.updateIntervalMs)
-      await this.waitForTime(this.data.updateIntervalMs)
+      if (this.data.debug) console.log("no canvases, recurse in ", this.data.throttle)
+      await this.waitForTime(this.data.throttle)
       await this.addEls()
     }
     // set up the VR stats panel
@@ -137,7 +143,7 @@ AFRAME.registerComponent("stats-in-vr", {
     this.statspanel.appendChild(this.monoImage);
     
     for (var i = 0; i < this.rscanvases.length; i++) {
-      console.log(this.rsid)
+      // console.log(this.rsid)
       this.yval = (1.3625 - i * 0.025);
       this.rsparent = this.rscanvases[i].parentElement;
       this.rsid = this.rsparent.querySelector(".rs-counter-id").innerText;
@@ -154,7 +160,7 @@ AFRAME.registerComponent("stats-in-vr", {
       this.idsuffix = this.rsids[i].replace(" ", "_");
       this.rscanvases[i].id = "rstats-" + this.idsuffix;
       
-      if (this.data.showAllGraphs || this.data.showGraphs.includes(this.rsid.toLowerCase())) {
+      if (this.data.showallgraphs || this.data.showgraphs.includes(this.rsid.toLowerCase())) {
       // create the image for the rstats canvas
         this.stats[i] = document.createElement('a-image');
         this.stats[i].setAttribute('position', {x:-0.08, y:this.yval, z:0});
@@ -164,8 +170,8 @@ AFRAME.registerComponent("stats-in-vr", {
         this.statspanel.appendChild(this.stats[i]);
       }
       
-      if (this.data.showAllLabels || this.data.showLabels.includes(this.rsid.toLowerCase())) {
-        console.log(this.data.showLabels,this.rsid.toLowerCase())
+      if (this.data.showalllabel || this.data.showlabels.includes(this.rsid.toLowerCase())) {
+        // console.log(this.data.showlabels,this.rsid.toLowerCase())
         // create the canvas for the value
         this.valuecanvases[i] = this.valuecanvases[i] || document.createElement("canvas");
         this.valuecanvases[i].setAttribute("id", "value-" + this.idsuffix);
@@ -193,7 +199,7 @@ AFRAME.registerComponent("stats-in-vr", {
     }
     this.statspanel.setAttribute("position", this.data.position);
     this.statspanel.setAttribute("scale", this.data.scale);
-    this.tick = AFRAME.utils.throttleTick(this.willtick, this.data.updateIntervalMs, this);
+    this.tick = AFRAME.utils.throttleTick(this.willtick, this.data.throttle, this);
     return this.data.enabled ? this.show() : this.hide();
   },
 
@@ -205,7 +211,7 @@ AFRAME.registerComponent("stats-in-vr", {
   newText: "",
   tick(){},
   willtick: function(log) {
-    if (!this.inVR && !this.data.debug) {
+    if (!this.inVR && !this.data.debug && !this.data.alwaysshow3dstats) {
       return;
     }
 
