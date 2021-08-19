@@ -1,3 +1,14 @@
+# features
+- get stats component data in VR, while you're actually using your app
+- high performance
+- uses existing stats component
+- pick which stats you want to track
+- throttle
+- pick background color, opacity
+- include some, all, or no charts
+- attach to camera by default, but attach anywhere you want
+- easy-peasy
+
 ## yet another necro component pulled into service
 
 This one is revived from back in the olden days! A-Frame 0.4.0 is close to as old as I've seen (pretty sure I have pulled a library somewhere that had a demo on 0.3.0?). Very cool that this 5 year old code can still be called into service.
