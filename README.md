@@ -6,7 +6,7 @@ I was thinking about using web2vr and doing the proper stats panel, but that wou
 https://github.com/chenzlabs/stats-in-vr/pull/1
 
 Which, with just one tiny bug fix, was found to work even on 1.2.0: https://glitch.com/edit/#!/stats-in-vr?path=index.html%3A36%3A53
-~~though it seems the bars may not be working properly and that they perhaps used to. perhaps some more tinkering is in order?~~ Got the bars working again. :D Also spent a few hours going over it, refactoring stuff in the process. I now realize it adds about 40-50 draw calls or so, because it works by adding a ton of images with canvas with text as textures for every value.
+~~though it seems the bars may not be working properly and that they perhaps used to. perhaps some more tinkering is in order?~~ Got the bars working again. :D Also spent a few hours going over it, refactoring stuff in the process. ~~I now realize it adds about 40-50 draw calls or so, because it works by adding a ton of images with canvas with text as textures for every value.~~ NM, fixed that too. Now all text stats are rendered as one buttery smooth image with canvas texture.
 
 So, adding my fork here. Will pull the updates here soon. It's got all the usual boilerplate, now fallen out of date. I just use the 'stats-in-vr.js' file and ignore the rest for now, may clean up rest of repo later.
 
