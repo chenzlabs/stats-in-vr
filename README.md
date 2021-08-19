@@ -1,11 +1,11 @@
 ## yet another necro component pulled into service
 
-This one is revived from back in the olden days! 0.4.0 is close to as old as I've seen. Very cool that this 5 year old code can still be called into service.
+This one is revived from back in the olden days! A-Frame 0.4.0 is close to as old as I've seen (pretty sure I have pulled a library somewhere that had a demo on 0.3.0?). Very cool that this 5 year old code can still be called into service.
 
 I've wanted this for a while, but I googled, found this, and then found what looked like a [promising pull request](https://github.com/chenzlabs/stats-in-vr/pull/1
 ).
 
-Which, with just one tiny bug fix, was found to work even on 1.2.0!
+Which, with just one tiny bug fix, was found to work even on A-Frame 1.2.0!
 
 ~~though it seems the bars may not be working properly and that they perhaps used to. perhaps some more tinkering is in order?~~ Got the bars working again. :D Also spent a few hours going over it, refactoring stuff in the process. ~~I now realize it adds about 40-50 draw calls or so, because it works by adding a ton of images with canvas with text as textures for every value.~~ NM, fixed that too. Now all text stats are rendered as one buttery smooth image with canvas texture.
 
@@ -32,7 +32,7 @@ when you enter VR, text stats get attached to your face. When you are not in VR,
 ### attach stats to your left hand when you enter vr:
 ```html
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.1.0/stats-in-vr.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.2.0/stats-in-vr.js"></script>
     <a-scene stats-in-vr="anchorel:#left-hand; position:0 -.5 0;showallgraphs:true;">
       <a-entity id="rig"
                 movement-controls="fly:true;"
@@ -92,13 +92,13 @@ https://glitch.com/edit/#!/stats-in-vr?path=index.html%3A17%3A30
 
 #### Browser
 
-Install and use by directly including the [browser file](https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.1.0/stats-in-vr.js):
+Install and use by directly including the [browser file](https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.2.0/stats-in-vr.js):
 
 ```html
 <head>
   <title>My A-Frame Scene</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.1.0/stats-in-vr.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.2.0/stats-in-vr.js"></script>
 </head>
 
 <body>
