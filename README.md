@@ -2,10 +2,10 @@
 
 This one is revived from back in the olden days! 0.4.0 is close to as old as I've seen. Very cool that this 5 year old code can still be called into service.
 
-I've wanted this for a while, but I googled, found this, and then found this pull request on it:
-https://github.com/chenzlabs/stats-in-vr/pull/1
+I've wanted this for a while, but I googled, found this, and then found what looked like a [promising pull request](https://github.com/chenzlabs/stats-in-vr/pull/1
+).
 
-Which, with just one tiny bug fix, was found to work even on 1.2.0: https://glitch.com/edit/#!/stats-in-vr?path=index.html%3A36%3A53
+Which, with just one tiny bug fix, was found to work even on 1.2.0!
 
 ~~though it seems the bars may not be working properly and that they perhaps used to. perhaps some more tinkering is in order?~~ Got the bars working again. :D Also spent a few hours going over it, refactoring stuff in the process. ~~I now realize it adds about 40-50 draw calls or so, because it works by adding a ton of images with canvas with text as textures for every value.~~ NM, fixed that too. Now all text stats are rendered as one buttery smooth image with canvas texture.
 
@@ -19,18 +19,17 @@ stats-in-vr component for [A-Frame](https://aframe.io).
 
 ![stats-in-vr](https://user-images.githubusercontent.com/6391152/130007970-a512c190-0a4e-4f0d-8c40-0d8e1e9e58e8.png)
 ![pick-graphs](https://user-images.githubusercontent.com/6391152/130017676-8de7e02b-268e-4896-89cb-3006e5a8dd58.png)
-The stats-in-vr component allows the A-Frame scene stats component to be visible in VR!
 
 
-## Example
+## Examples
 
-### default
+### default behavior:
 when you enter VR, text stats get attached to your face. When you are not in VR, you see normal 2d stats.
 ```html
 <a-scene stats-in-vr></a-scene>
 ```
 
-### attach stats to your left hand when you enter vr
+### attach stats to your left hand when you enter vr:
 ```html
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.1.0/stats-in-vr.js"></script>
@@ -49,8 +48,8 @@ when you enter VR, text stats get attached to your face. When you are not in VR,
     </a-scene>
 ```
 
-### make it a permanent fixture in your scene, vr or not
-stick a VR panel somewhere you want in the scene, and make it stay there.
+### make it a permanent fixture in your scene, vr or not:
+stick a VR panel somewhere you want in the scene, and make it stay there, whether you're in VR or not.
 ```html
 <a-scene stats-in-vr="anchorel:#the-box;position:0 .4 0;showallgraphs:true; alwaysshow3dstats:true; show2dstats:false;" >
      <a-circle 
@@ -93,7 +92,7 @@ https://glitch.com/edit/#!/stats-in-vr?path=index.html%3A17%3A30
 
 #### Browser
 
-Install and use by directly including the [browser file](dist):
+Install and use by directly including the [browser file](https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.1.0/stats-in-vr.js):
 
 ```html
 <head>
