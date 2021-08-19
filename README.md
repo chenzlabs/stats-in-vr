@@ -27,6 +27,26 @@ The stats-in-vr component allows the A-Frame scene stats component to be visible
 ```html
 <a-scene stats-in-vr></a-scene>
 ```
+
+### attach stats to your left hand
+```html
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.1.0/stats-in-vr.js"></script>
+    <a-scene stats-in-vr="anchorEl:#left-hand;position:0 -.5 0;showAllGraphs:true; debug:true;" renderer="physicallyCorrectLights: true">
+      <a-entity id="rig"
+                movement-controls="fly:true;"
+                position="0 0 0">
+        <a-entity camera
+                  id="the-cam"
+                  position="0 1.6 0"
+                  look-controls="pointerLockEnabled: false">
+        </a-entity>
+        <a-entity id="left-hand" hand-controls="hand: left"></a-entity>
+        <a-entity hand-controls="hand: right"></a-entity>
+      </a-entity>
+    </a-scene>
+```
+
 ## Glitch
 https://glitch.com/edit/#!/stats-in-vr?path=index.html%3A17%3A30
 
