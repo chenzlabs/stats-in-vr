@@ -36,12 +36,17 @@ The stats-in-vr component allows the A-Frame scene stats component to be visible
 ```js
   schema: {
     enabled: { type: "boolean", default: true },
+    debug: { type: "boolean", default: false },
     position: { type: "string", default: "0 -1.1 -1" },
     rotation: { type: "string", default: "-20 0 0" },
     scale: { type: "string", default: "1 .8 1" },
-    updateIntervalMs: { type: "number", default: 250 },
-    show2dstats: { type: "boolean", default: true },
-    anchorEl: { type: "string", default: "[camera]" },
+    updateIntervalMs: { type: "number", default: 20 }, // throttle
+    show2dstats: { type: "boolean", default: true },  // show the built-in 'stats' component
+    anchorEl: { type: "string", default: "[camera]" }, // anchor in-vr stats to something other than the camera
+    showAllLabels: { type: "boolean", default: false }, 
+    showLabels: {type: 'array', default:['raf','fps','calls','entities']}, // e.g., ['raf','fps','calls','entities']
+    showAllGraphs: { type: "boolean", default: false },
+    showGraphs: {type: 'array', default:['raf','fps','calls','entities']}, // e.g., ['raf','fps','calls','entities']
   },
 ```
 
