@@ -47,7 +47,8 @@ when you enter VR, full stats get attached to your face, about half a meter down
 ### attach translucent stats to your left hand when you enter vr:
 ```html
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.2.1/stats-in-vr.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.2.2/stats-in-vr.js"></script>
+
     <a-scene stats-in-vr="anchorel:#left-hand; position:0 -.5 0;showallgraphs:true;fillstyle:rgba(255, 255, 255, 0.5);">
       <a-entity id="rig" movement-controls="fly:true;" position="0 0 0">
         <a-entity camera position="0 1.6 0" look-controls>
@@ -95,13 +96,13 @@ https://glitch.com/edit/#!/stats-in-vr?path=index.html%3A17%3A30
 
 #### Browser
 
-Install and use by directly including the [browser file](https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.2.1/stats-in-vr.js):
+Install and use by directly including the [browser file](https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.2.2/stats-in-vr.js):
 
 ```html
 <head>
   <title>My A-Frame Scene</title>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.2.1/stats-in-vr.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/kylebakerio/stats-in-vr@1.2.2/stats-in-vr.js"></script>
 </head>
 
 <body>
