@@ -1,6 +1,6 @@
 # features
 - get stats component data in VR, while you're actually using your app
-- high performance
+- high performance, just one canvas texture for all stats (each though each graph is its own canvas)
 - uses existing stats component
 - pick which stats you want to track
 - throttle
